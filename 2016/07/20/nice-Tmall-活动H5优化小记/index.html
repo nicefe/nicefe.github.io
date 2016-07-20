@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Description-->
+    
+        <meta name="description" content="先放出做完之后的链接和截图吧：
+
+http://m.oneniceapp.com/acitivity/tmall（PS:移动端下打开）
+
+这个是第一页，前面还有一个loading的页面我就不截图了。可以点击上面的链接，打开开发者模式选择模拟移动端来看具体的效果。
+我先把这个H5活动中遇到的问题列一下">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="nice|FED">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="nice&amp;Tmall 活动H5优化小记"/>
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="nice|FED"/>
+
+    <!--Page Cover-->
+    
+        <meta property="og:image" content="undefined"/>
+    
+
+    <!-- Title -->
+    
+    <title>nice&amp;Tmall 活动H5优化小记 - nice|FED</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sass/main.css">
+
+    <!--[if lt IE 8]>
+        <script src="/js/ie/html5shiv.js"></script>
+    <![endif]-->
+
+    <!--[if lt IE 8]>
+        <link rel="stylesheet" href="/sass/ie8.css">
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="/sass/ie9.css">
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Menu -->
+        <!-- Header -->
+<header id="header">
+    <div class="inner">
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <span class="symbol"><img src="/images/nice_icon.png" alt="" /></span><span class="title">nice|FED</span>
+        </a>
+
+        <!-- Nav -->
+        <nav>
+            <ul>
+                <li><a href="#menu">Menu</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+    <h2>Menu</h2>
+    <ul>
+        
+            <li>
+                <a href="/">Home</a>
+            </li>
+        
+            <li>
+                <a href="/archives">Archives</a>
+            </li>
+        
+            <li>
+                <a href="/about.html">About</a>
+            </li>
+        
+    </ul>
+</nav>
+
+
+        <div id="main">
+            <div class="inner">
+
+                <!-- Main Content -->
+                
+
+    <h1>nice&Tmall 活动H5优化小记</h1>
+
+
+
+<!-- Gallery -->
+
+
+<!-- Content -->
+<blockquote>
+<p>先放出做完之后的链接和截图吧：</p>
+</blockquote>
+<p><a href="http://m.oneniceapp.com/acitivity/tmall（PS:移动端下打开）" target="_blank" rel="external">http://m.oneniceapp.com/acitivity/tmall（PS:移动端下打开）</a></p>
+<p><img style="display:block;margin:0 auto;max-width:250px" src="http://o8sxkcont.bkt.clouddn.com/IMG_7165.PNG"></p>
+<p>这个是第一页，前面还有一个loading的页面我就不截图了。可以点击上面的链接，打开开发者模式选择模拟移动端来看具体的效果。</p>
+<p>我先把这个H5活动中遇到的问题列一下把再一个一个的去解答；</p>
+<ul>
+<li>要加载的图片量很大，这其中还包括9张大的背景图</li>
+<li>层叠的图片较多，因为要实现设计图中人物叠图片上的效果</li>
+<li>活动流量较大，所以要适配的设备和网络环境较复杂</li>
+<li>背景音乐如何在不同的浏览器或者内置webview下播放</li>
+</ul>
+<h2 id="先说图片的处理"><a href="#先说图片的处理" class="headerlink" title="先说图片的处理"></a>先说图片的处理</h2><p>​    整个活动的图片切出来大概有130张，这个是一个很大的很吓人的量了，没办法，虽然尽可能的去合并能合并的图片，但是设计的好多重叠的效果是一定要再切一张人物图去盖住底部的文字的。不过在这里也是有些优化部分的，比如如果覆盖的量不大的话通过CSS的border-radius去切掉某一脚的一小块显的像是被覆盖，这里如果要切的更精细的话可以用clip-path去切可能效果更好。</p>
+<p>​    回到正题上，这么大的图片量肯定就要用到预加载了，先丢出两个好加载的动画来hold住用户，然后显示loading的百分比读数。当把需要的图片都预加载完成了之后，就可以进入到正式的页面了。</p>
+<p>​    放出一段封装的预加载coffee代码</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#预加载图片</span></span><br><span class="line"><span class="function">      <span class="title">fetchImgs</span> = <span class="params">(imgs, cur)</span>=&gt;</span></span><br><span class="line">        cur = cur || <span class="number">0</span></span><br><span class="line">        total = imgs.length</span><br><span class="line">        curPercent = <span class="string">''</span></span><br><span class="line">        <span class="keyword">if</span> (imgs &amp;&amp; imgs.length &gt; cur)</span><br><span class="line">          img = <span class="keyword">new</span> Image()</span><br><span class="line">          img.onload = <span class="function"><span class="params">()</span>=&gt;</span></span><br><span class="line">            fetchImgs(imgs, ++cur)</span><br><span class="line">            curPercent = Math.ceil((cur / total) * <span class="number">100</span>) + <span class="string">'%'</span></span><br><span class="line">            @$loadTime.html(curPercent)</span><br><span class="line">            <span class="comment">#预加载完成</span></span><br><span class="line">            <span class="keyword">if</span> cur == imgs.length - <span class="number">1</span></span><br><span class="line">              finishLoad()</span><br><span class="line">          img.src = imgs[cur]</span><br></pre></td></tr></table></figure>
+<p>​    imgs就是要预加载的图片数组啦。</p>
+<p>​    这种方法有一个坏处就是，如果图片量确实好大，然后又碰到某个用户的网络确实不咋地。。。怎么办？网不好的用户就放弃吧，nice定位是中高端用户，都没有4G刷啥nice啊。哈哈哈哈，开玩笑==这个锅肯定得我们来背来解决。这里采用的就是将图片的预加载分开来实现，简单的说就是第一次实际上并没有加载所有的图片；</p>
+<p><img style="display:block;margin:0 auto;max-width:250px" src="http://o8sxkcont.bkt.clouddn.com/1.pic.jpg"></p>
+<p>​    可以看到有两个蓝色的多次叠加，每个叠加表示一次预加载的下载量。第一次当然是在loading页，加载了前三个页面的大部分图片，第二次发生在第一个页面进行动画的时候，也就是第一次预加载完成之后，实际上又在用户看不到的情况下加载了第二次，加载了剩余的图片。在这样操作之后很明显的弱网下的loading时间大大缩短了。这里有一点要解释下，因为我们的第一个页面的动画是很多的，大概要播放15s所以我们可以在这个时间内执行第二次的预加载，如果是其他的场景下如果用户会很快的跳到后面的页面的话，最好还是在开头就把图片都加载进来把。不管怎么说，根据地形实际情况去设计地道，才是地道战的真谛啊。</p>
+<p>​    图片的压缩的话：每个图片我都通过了智图（<a href="http://zhitu.isux.us/）的压缩，感觉一般般，但是能压缩个几个是kb还是阔以的。看到里面有个webp这个格式，我知道淘宝里面的pc端用到了很多这个格式去做压缩，效果肯定不用说，因为我试了试光是9张背景图就能压缩0.5M。这个是很酸爽的，but。。。IOS" target="_blank" rel="external">http://zhitu.isux.us/）的压缩，感觉一般般，但是能压缩个几个是kb还是阔以的。看到里面有个webp这个格式，我知道淘宝里面的pc端用到了很多这个格式去做压缩，效果肯定不用说，因为我试了试光是9张背景图就能压缩0.5M。这个是很酸爽的，but。。。IOS</a> safari上现在都不兼容，所以放弃了。</p>
+<p>​    在使用了分词预加载之后又遇到了一个新的问题，就是虽然图片预加载了，但是从缓存中读取图片也是要占用线程的，而我在进入第二个页面的时候发起了第二次预加载的请求，这就尴尬了。网页加载是单线程的，于是乎又打架了，而且打架的结果是从缓存中读取图片居然输给了第二次预加载。我的第一个页面的文字动画从切换，变成了一闪一闪的亮晶晶，因为从缓存读取的图片还在排队。于是我想到了base64，其实早就多用这个玩意。个人觉得只要小于5kb的都可以转换成base64写到css里面，效果很好，因为从css读取样式不会跟你图片的加载冲突。顺利的解决了亮晶晶的问题。</p>
+<h2 id="层叠图片怎么处理"><a href="#层叠图片怎么处理" class="headerlink" title="层叠图片怎么处理"></a>层叠图片怎么处理</h2><p>之前只是简单的使用了z-index，知道能够通过控制这个z-index来实现PS中图层一样的效果。后来仔细研究了下，特别是它的规则：</p>
+<ol>
+<li>同级的元素，默认的情况下后面的元素会覆盖前面的元素</li>
+<li>同级元素，z-index存在的情况下z-index大的会覆盖小的</li>
+</ol>
+<p>看起来很简单，但是实际应用的时候就要考虑了，因为文档流是从上往下读，我对这个的理解就是，能不用z-index就不用，能通过元素放置文档位置的方法控制叠加就不要用z-index。很简单的道理，第一是这个肯定要耗性能，第二个是如果你的元素随意的放置然后全部通过z-index去处理的话，会造成视觉上有一个变化过程，特别是性能不好的移动端上。对照着设计图重新规划了每个元素的位置。</p>
+<h2 id="设备的适配"><a href="#设备的适配" class="headerlink" title="设备的适配"></a>设备的适配</h2><p>这个其实是在nice里面已经有很好的practise了。因为基本上都是要根据设计图来开发页面，所以nice的做法是通过rem来做不同尺寸的设备页面的适配。这里就不再详细介绍，阿里有一套很详细的介绍和实践</p>
+<p><a href="https://github.com/amfe/lib-flexible" target="_blank" rel="external">https://github.com/amfe/lib-flexible</a></p>
+<p>简单的说就是头部js控制整个不同尺寸屏幕页面下的font-size然后通过rem来替代px作为标准设置每个元素。这里要提一下，最好事前跟设计沟通一下，可能在pc的web端不会想到这个问题，因为pc是不会考虑高度的，因为网页大多很长很长，所以没有谁会考虑整个页面的高度，但是在移动端，就有可能遇到这个问题。比如6plus的屏幕大啊，于是乎根据iphone6的尺寸设计的页面在6p下就会底部出现一个长的白条。这个就有些尴尬，也怪自己没有事先跟设计沟通，其实最好是设计每个页面都是有一个纯色的背景，这样不管怎么样底部不会突然变白色的情况出现了。</p>
+<h2 id="背景音乐"><a href="#背景音乐" class="headerlink" title="背景音乐"></a>背景音乐</h2><p>这个说简单也简单，就是一个audio元素，可是在不同的设备的webview啊或者自带浏览器啊，大部分的情况下都是不会自动播放的，因为不管是android还是ios都是默认阻止了浏览器播放音频的。没办法，在寻找hack无望的情况下，又让设计设计了一个毛茸茸的小手去提示用户播放，然后规则是只要摸到了屏幕，触发了touchstart事件就播放。这里面还要不要同右上角的那个音乐控制按钮冲突，还要避开各种的重叠的图层可能导致触摸不到的问题，最后实现了现在的背景音乐播放功能。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>其实还有一些乱七八糟的小的优化跟修复bug，就不记录了。心得就是贴近不同的设计还有使用场景去优化吧，还有一些通用的优化方案就不叙述了。</p>
+
+
+<!-- Tags -->
+
+
+
+<div class="tags">
+    <a href="/tags/优化/" class="button small">优化</a>
+</div>
+
+
+
+<!-- Comments -->
+<div>
+    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+</div>
+
+
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <section>
+            <h2>About</h2>
+            <div>
+                致力于打造一个属于年轻人的自由分享社区。
+            </div>
+        </section>
+        <section>
+            <h2>Follow</h2>
+            <ul class="icons">
+                
+                
+                
+                
+                
+                    <li><a href="https://github.com/nicefe" class="icon style2 fa-github" target="_blank" ><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                
+                    <li><a href="\#" class="icon style2 fa-envelope-o" target="_blank" ><span class="label">Email</span></a></li>
+                
+                
+                    <li><a href="\#" class="icon style2 fa-rss" target="_blank" ><span class="label">RSS</span></a></li>
+                
+            </ul>
+        </section>
+        <ul class="copyright">
+            <li>&copy; nice FED. All rights reserved</li>
+            <li>Hexo: <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></li>
+        </ul>
+    </div>
+</footer>
+
+    </div>
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- skel -->
+<script src="/js/skel.min.js"></script>
+
+<!-- Custom Code -->
+<script src="/js/util.js"></script>
+
+<!--[if lte IE 8]>
+<script src="/js/ie/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom Code -->
+<script src="/js/main.js"></script>
+
+<!-- Gallery -->
+<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'klugjo';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+</body>
+
+</html>
