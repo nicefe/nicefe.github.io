@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Description-->
+    
+        <meta name="description" content="js中如何判断数组对象这个好像提起来好简单啊。可能在java或者c当中这种东西就是一句话的问题，为毛这里要特别的还要写个blog来研究。。
+其实小弟本来也是抱着这样的想法，直到有一天看到了大漠老师的一篇深入浅出的blog：http://www.w3cplus.com/javascript/array">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="nice|FED">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="检测数组"/>
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="nice|FED"/>
+
+    <!--Page Cover-->
+    
+        <meta property="og:image" content="undefined"/>
+    
+
+    <!-- Title -->
+    
+    <title>检测数组 - nice|FED</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sass/main.css">
+
+    <!--[if lt IE 8]>
+        <script src="/js/ie/html5shiv.js"></script>
+    <![endif]-->
+
+    <!--[if lt IE 8]>
+        <link rel="stylesheet" href="/sass/ie8.css">
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="/sass/ie9.css">
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Menu -->
+        <!-- Header -->
+<header id="header">
+    <div class="inner">
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <span class="symbol"><img src="/images/nice_icon.png" alt="" /></span><span class="title">nice|FED</span>
+        </a>
+
+        <!-- Nav -->
+        <nav>
+            <ul>
+                <li><a href="#menu">Menu</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+    <h2>Menu</h2>
+    <ul>
+        
+            <li>
+                <a href="/">Home</a>
+            </li>
+        
+            <li>
+                <a href="/archives">Archives</a>
+            </li>
+        
+            <li>
+                <a href="/about.html">About</a>
+            </li>
+        
+    </ul>
+</nav>
+
+
+        <div id="main">
+            <div class="inner">
+
+                <!-- Main Content -->
+                
+
+    <h1>检测数组</h1>
+
+
+
+<!-- Gallery -->
+
+
+<!-- Content -->
+<h1 id="js中如何判断数组对象"><a href="#js中如何判断数组对象" class="headerlink" title="js中如何判断数组对象"></a>js中如何判断数组对象</h1><p>这个好像提起来好简单啊。可能在java或者c当中这种东西就是一句话的问题，为毛这里要特别的还要写个blog来研究。。</p>
+<p>其实小弟本来也是抱着这样的想法，直到有一天看到了大漠老师的一篇深入浅出的blog：<a href="http://www.w3cplus.com/javascript/array-part-2.html" target="_blank" rel="external">http://www.w3cplus.com/javascript/array-part-2.html</a></p>
+<p>才发现。。。自己too naive, too simple</p>
+<p>javascript是一门弱语言，这个不仅仅是体现在变量上面的没有类型的强制性。还体现在在js世界中，其实像Function啊Array啊它们本质上都是对象。这就导致了我们在对某个变量进行类型检测的时候，如果只是简单的采用typeof去测它的话得到的大部分给你的答案都是Object。。。俗称：万物皆对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="keyword">return</span>;&#125;); <span class="comment">// function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="string">"a"</span>); <span class="comment">// string</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="number">123</span>); <span class="comment">// number</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">true</span>); <span class="comment">// boolean</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">NaN</span>); <span class="comment">// number</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> !<span class="literal">NaN</span>); <span class="comment">//boolean</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> &#123;name:<span class="string">"益达"</span>,age: <span class="string">"23"</span>&#125;); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> [<span class="string">"益达"</span>,<span class="string">"23"</span>]); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span>); <span class="comment">// object</span></span><br></pre></td></tr></table></figure>
+<p>你看你看，function还是function但是到了数组那儿，就是object了。</p>
+<p>这就引出了这篇的blog</p>
+<h2 id="如何检测数组"><a href="#如何检测数组" class="headerlink" title="如何检测数组"></a>如何检测数组</h2><p>大部分的浏览器都能通过ECMAScript5当中的isArray函数来检测，这个是一个很好用的内置函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'hello'</span>,<span class="string">'张益达'</span>];</span><br><span class="line">isArray(arr);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>好的，本blog完结。。。。</p>
+<p>=，=怎么可能这么随便，虽然nice的高逼格的客户群是不用不支持ECMAScript5的浏览器（IE8及之前）</p>
+<p>但是。。抱着学术的态度，还是要研究研究如果我们自己实现一个isArray换句话说就是在IE8的这种浏览器下，怎么去判断数组；</p>
+<p>废话不多说，直接给出方法表:</p>
+<blockquote>
+<p>通过对象自身的<code>constructor</code>属性的判断</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">"益达"</span>,<span class="string">"nicefe"</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr.constructor === <span class="built_in">Array</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>通过向上检测构造属性来判断是否为Array</p>
+<blockquote>
+<p>通过instanceof操作符判断</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var arr = [&quot;益达&quot;,&quot;nicefe&quot;];</span><br><span class="line">console.log(arr instanceof Array); // true</span><br></pre></td></tr></table></figure>
+<p>如果arr是一个Array对象的实例，那么就可以理解它是一个数组。</p>
+<blockquote>
+<p>对象原生的toString方法的检测</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">isArray = function(obj) &#123;</span><br><span class="line">    return Object.prototype.toString.call(obj) == &quot;[object Array]&quot;;</span><br><span class="line">&#125;</span><br><span class="line">var arr = [&quot;益达&quot;,&quot;nicefe&quot;];</span><br><span class="line">console.log(isArray(arr)); // true</span><br></pre></td></tr></table></figure>
+<p>这种是通过判断你要判断的对象是否有toString()方法来判断是否为数组。但是这个方法，额，如果我一不小心给某个对象加上了toString()方法的话，那么这个函数也同样会认为它是数组了。。。。</p>
+<p>这三种方法都是有效的；</p>
+<p>最后大漠老师总结了一个合成的方法，在不知道浏览器情况的情况下先通过判断isArray()方法是否有效，无效的情况下再通过判断toString是否为它的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var isArray = (function () &#123;</span><br><span class="line">    if (Array.isArray) &#123;</span><br><span class="line">        return Array.isArray;</span><br><span class="line">    &#125; </span><br><span class="line">    var objectToStringFn = Object.prototype.toString,</span><br><span class="line">        arrayToStringResult = objectToStringFn.call([]); </span><br><span class="line"></span><br><span class="line">    return function (subject) &#123;</span><br><span class="line">        return objectToStringFn.call(subject) === arrayToStringResult;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;());</span><br><span class="line"></span><br><span class="line">var arr = [];</span><br><span class="line">isArray(arr); // true</span><br></pre></td></tr></table></figure>
+<p>over….</p>
+
+
+<!-- Tags -->
+
+
+
+<div class="tags">
+    <a href="/tags/JavaScript/" class="button small">JavaScript</a>
+</div>
+
+
+
+<!-- Comments -->
+<div>
+    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+</div>
+
+
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <section>
+            <h2>About</h2>
+            <div>
+                致力于打造一个属于年轻人的自由分享社区。
+            </div>
+        </section>
+        <section>
+            <h2>Follow</h2>
+            <ul class="icons">
+                
+                
+                
+                
+                
+                    <li><a href="https://github.com/nicefe" class="icon style2 fa-github" target="_blank" ><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                
+                    <li><a href="\#" class="icon style2 fa-envelope-o" target="_blank" ><span class="label">Email</span></a></li>
+                
+                
+                    <li><a href="\#" class="icon style2 fa-rss" target="_blank" ><span class="label">RSS</span></a></li>
+                
+            </ul>
+        </section>
+        <ul class="copyright">
+            <li>&copy; nice FED. All rights reserved</li>
+            <li>Hexo: <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></li>
+        </ul>
+    </div>
+</footer>
+
+    </div>
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- skel -->
+<script src="/js/skel.min.js"></script>
+
+<!-- Custom Code -->
+<script src="/js/util.js"></script>
+
+<!--[if lte IE 8]>
+<script src="/js/ie/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom Code -->
+<script src="/js/main.js"></script>
+
+<!-- Gallery -->
+<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'klugjo';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+</body>
+
+</html>
