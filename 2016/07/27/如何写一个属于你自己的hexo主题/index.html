@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Description-->
+    
+        <meta name="description" content="出发点其实本来是想找一个好看的逼格高的hexo主题的。
+可是。。
+尼玛hexo.io打开要好久有木有，根本就打不开有木有。
+就算运气好，翻着墙打开了，点到theme的列表，又打不开了阿西吧啊。
+点开了theme列表，结果选择主题的时候又是各种的慢打不开啊有木有。。。
+自己写一个花了一天半写了一个he">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="nice|FED">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="如何写一个属于你自己的hexo主题"/>
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="nice|FED"/>
+
+    <!--Page Cover-->
+    
+        <meta property="og:image" content="undefined"/>
+    
+
+    <!-- Title -->
+    
+    <title>如何写一个属于你自己的hexo主题 - nice|FED</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sass/main.css">
+
+    <!--[if lt IE 8]>
+        <script src="/js/ie/html5shiv.js"></script>
+    <![endif]-->
+
+    <!--[if lt IE 8]>
+        <link rel="stylesheet" href="/sass/ie8.css">
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="/sass/ie9.css">
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Menu -->
+        <!-- Header -->
+<header id="header">
+    <div class="inner">
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <span class="symbol"><img src="/images/nice_icon.png" alt="" /></span><span class="title">nice|FED</span>
+        </a>
+
+        <!-- Nav -->
+        <nav>
+            <ul>
+                <li><a href="#menu">Menu</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+    <h2>Menu</h2>
+    <ul>
+        
+            <li>
+                <a href="/">Home</a>
+            </li>
+        
+            <li>
+                <a href="/archives">Archives</a>
+            </li>
+        
+            <li>
+                <a href="/about.html">About</a>
+            </li>
+        
+    </ul>
+</nav>
+
+
+        <div id="main">
+            <div class="inner">
+
+                <!-- Main Content -->
+                
+
+    <h1>如何写一个属于你自己的hexo主题</h1>
+
+
+
+<!-- Gallery -->
+
+
+<!-- Content -->
+<h2 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h2><p>其实本来是想找一个好看的逼格高的hexo主题的。</p>
+<p><strong>可是。。</strong></p>
+<p>尼玛hexo.io打开要好久有木有，根本就打不开有木有。</p>
+<p>就算运气好，翻着墙打开了，点到theme的列表，又打不开了阿西吧啊。</p>
+<p>点开了theme列表，结果选择主题的时候又是各种的慢打不开啊有木有。。。</p>
+<h2 id="自己写一个"><a href="#自己写一个" class="headerlink" title="自己写一个"></a>自己写一个</h2><p>花了一天半写了一个hexo的主题。总体来说反正目前在我的chrome的环境下还是没啥bug的，因为本来也不大，这也说明了一个道理，其实很多看别人写的很牛逼的东西，别人各种写出好用好看的组件啊或者库啊之类的，其实也是一砖一瓦垒起来的。只要你用心去弄，也可以弄个大概模样的东西。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><blockquote>
+<p>第一步搭架子</p>
+</blockquote>
+<p>第一步肯定是要创建一个骨架子，每一个主题其实可以理解成就是ejs+js+css。</p>
+<p>让我们从头开始把：先安装hexo-cli生成器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<p>安装好了hexo之后，用<code>hexo init</code>创建你的blog项目。</p>
+<p>创建了之后cd到themes主题文件夹里面。</p>
+<p>这里我是在网上找到了一个hexo 的theme结构生成器;是github上面随便找的一个</p>
+<p><a href="https://github.com/tcrowe/generator-hexo-theme" target="_blank" rel="external">https://github.com/tcrowe/generator-hexo-theme</a></p>
+<p>可能有更好的吧。不过这些不是重点，重点是我们创建好了一个主题骨架。</p>
+<p><img style="max-width:500px" src="http://o8sxkcont.bkt.clouddn.com/asdf.png"></p>
+<p>这个是我的主题的目录结构；</p>
+<p>里面的东西不多，可以看到layout里面放的是ejs文件，source是静态资源文件，我习惯用的stylus+js。可以单独在这个主题文件夹下创建git库然后放到github上。</p>
+<p>我做完之后的github地址：<a href="https://github.com/Yidada/z-index" target="_blank" rel="external">https://github.com/Yidada/z-index</a></p>
+<p>好了，第一步我们的骨架子就弄好了。</p>
+<blockquote>
+<p>第二步开发</p>
+</blockquote>
+<p>这个其实就是自我发挥释放天性的时候了。</p>
+<p>主要提下layout文件夹里面的ejs文件，有一个layout.ejs这个是所有页面的主页面，如果之前用过ejs的一定知道ejs能够嵌套其他的ejs文件，所有的ejs都是嵌套在layout.ejs里面的。打开layout.ejs可以看到。</p>
+<p><img src="http://o8sxkcont.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-27%20%E4%B8%8B%E5%8D%885.44.04.png"></p>
+<p>我截了一块body里面的，整个内容页面呢就在这里分成了header、body、footer然后具体里面的内容就在layout文件夹下面的partials文件夹里面的各个ejs文件。不同的路由hexo会去填充不同的ejs。</p>
+<p>​    我们可以先运行下，看下最原始的主题是啥样子。cd到整个blog项目的目录下，修_config.yml文件，修改里面的theme字段为你的主题的名字（一定要记得修改，:号后面一定要空格），我这里就是z-index，然后运行hexo s 等跑起来了，浏览器打开默认的地址是：localhost:4000能够看到。。。。。</p>
+<p><img src="http://o8sxkcont.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-27%20%E4%B8%8B%E5%8D%885.53.09.png"></p>
+<p>恩，就是这么原始，就是这么朴素。</p>
+<p>好了，赶紧开始我们自己的主题开发吧。    </p>
+<p>默认会css文件夹里面会有一个跟你的主题名字一样的.css文件，js也一样。这两个就是主战场了，具体的开发看自己了。</p>
+<ul>
+<li>reset.css咯</li>
+<li>从index.ejs一个一个的对照着页面写样式</li>
+</ul>
+<p>哥们自己这里因为特别喜欢clip-path这个属性，所以写了一个loading的组件。</p>
+<blockquote>
+<p>文章的排版</p>
+</blockquote>
+<p>首页啊乱七八糟的页面的样式都是老的东西，不过这里想特别的提下文章的样式。这个其实挺头疼的，因为博客博客最核心的当然就是文章了，可是感觉如果每种样式去调教去写的话又可以出个文章了。</p>
+<p>所以在这里。。。大大的安利一个sofish大大的<a href="http://typo.sofi.sh/中文网页的重设与排版。很好看，用的也很爽。因为也是在.typo下的，也不会污染其他的元素。" target="_blank" rel="external">http://typo.sofi.sh/中文网页的重设与排版。很好看，用的也很爽。因为也是在.typo下的，也不会污染其他的元素。</a></p>
+<blockquote>
+<p>后续</p>
+</blockquote>
+<p>好像没有太多的后续了，hexo配置好之后，先generate再deploy就行了。</p>
+
+
+<!-- Tags -->
+
+
+
+<div class="tags">
+    <a href="/tags/日常-hexo/" class="button small">日常 hexo</a>
+</div>
+
+
+
+<!-- Comments -->
+<div>
+    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+</div>
+
+
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <section>
+            <h2>About</h2>
+            <div>
+                致力于打造一个属于年轻人的自由分享社区。
+            </div>
+        </section>
+        <section>
+            <h2>Follow</h2>
+            <ul class="icons">
+                
+                
+                
+                
+                
+                    <li><a href="https://github.com/nicefe" class="icon style2 fa-github" target="_blank" ><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                
+                    <li><a href="\#" class="icon style2 fa-envelope-o" target="_blank" ><span class="label">Email</span></a></li>
+                
+                
+                    <li><a href="\#" class="icon style2 fa-rss" target="_blank" ><span class="label">RSS</span></a></li>
+                
+            </ul>
+        </section>
+        <ul class="copyright">
+            <li>&copy; nice FED. All rights reserved</li>
+            <li>Hexo: <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></li>
+        </ul>
+    </div>
+</footer>
+
+    </div>
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- skel -->
+<script src="/js/skel.min.js"></script>
+
+<!-- Custom Code -->
+<script src="/js/util.js"></script>
+
+<!--[if lte IE 8]>
+<script src="/js/ie/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom Code -->
+<script src="/js/main.js"></script>
+
+<!-- Gallery -->
+<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'klugjo';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+</body>
+
+</html>
